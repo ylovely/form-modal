@@ -5,6 +5,7 @@ import './index.css';
 import { Provider } from 'react-redux'
 import store from './Store'
 import registerServiceWorker from './registerServiceWorker';
+import 'element-theme-default';
 
 ReactDOM.render(
   <Provider store={store}>

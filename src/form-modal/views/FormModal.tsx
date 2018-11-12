@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { FormModalState } from '../reducer'
 import * as actions from '../actions'
+import { Layout, Button, Dialog } from 'element-react'
+import QRCode from '../../qrcode/QRCode'
 
 interface Props {
   link: string,
@@ -25,17 +27,27 @@ function FormModal({
 }: Props) {
   return (
     <div className="form-container">
-      <div className="submit-btn">
-        <button onClick={ onToggleFormModal(true) }>提交</button>
-      </div>
-      <div className="form-modal">
-        <div className="modal-header">
-          <span onClick={ onToggleFormModal(false) }>X</span>
-        </div>
-        <div className="modal-body">
-          <span>这是一段信息</span>
-        </div>
-      </div>
+      <Layout.Row>
+        <Layout.Col span={24} className="submit-btn-col">
+          <Button type="primary" onClick={ () => onToggleFormModal(true) }>提交</Button>
+        </Layout.Col>
+      </Layout.Row>
+      <Dialog
+        title="发布表单"
+        visible={ !showFormModal }
+        closeOnClickModal={false}
+        closeOnPressEscape={false}
+        onCancel={ () => onToggleFormModal(true) }
+      >
+        <Dialog.Body>
+          <div>here is Link component</div>
+          <div className="p-20"><QRCode /></div>
+          <div>here is DateTimePicker component</div>
+          <div>here is Password component</div>
+          <div>here is ReplyOnce component</div>
+          <div>here is ReplyOncePerday component</div>
+        </Dialog.Body>
+      </Dialog>
     </div>
   )
 }
@@ -60,7 +72,7 @@ function mapStateToProps({
 
 function mapDispatchToProps(dispatch: Dispatch<actions.FormModalAction>) {
   return {
-    onToggleFormModal: () => dispatch(actions.updateShowFormModal(true))
+    onToggleFormModal: (showFormModal: boolean) => dispatch(actions.updateShowFormModal(showFormModal))
   }
 }
 
