@@ -5,7 +5,9 @@ export function generateDynamicKey(): string {
 }
 
 export function generateDynamicPassword(): string {
-  return 'gRl4'
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const len = chars.length;
+  return [1, 2, 3, 4].map(() => chars.charAt(Math.floor(Math.random() * len))).join('');
 }
 
 export function showSuccessMessage(message: string): void {

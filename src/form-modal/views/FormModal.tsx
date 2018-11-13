@@ -146,12 +146,10 @@ function mapStateToProps({
 function mapDispatchToProps(dispatch: Dispatch<actions.FormModalAction>) {
   return {
     onChangeDate: (date: Date) => {
-      console.log(date);
       dispatch(actions.updateDate(date));
       showSuccessMessage('设置成功！');
     },
     onChangeTime: (time: Date) => {
-      console.log(time);
       dispatch(actions.updateTime(time));
       showSuccessMessage('设置成功！');
     },

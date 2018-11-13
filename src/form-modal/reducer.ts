@@ -25,7 +25,6 @@ export default (state: FormModalState = {
   showReplyOnce: false,
   showReplyOncePerday: false
 }, action: FormModalAction) => {
-  console.log(state, action);
   switch(action.type) {
     case UPDATE_LINK: {
       return { ...state, link: action.link }
