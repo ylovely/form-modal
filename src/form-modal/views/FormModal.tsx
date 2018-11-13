@@ -1,29 +1,45 @@
-import * as React from 'react'
-import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
-import { FormModalState } from '../reducer'
-import * as actions from '../actions'
-import { Layout, Button, Dialog } from 'element-react'
-import QRCode from '../../qrcode/QRCode'
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import CopyToClipboard from 'react-copy-to-clipboard';
+import { FormModalState } from '../reducer';
+import * as actions from '../actions';
+import { Layout, Button, Dialog, Input, Checkbox } from 'element-react';
+import QRCode from '../../qrcode/QRCode';
+import { generateDynamicKey, showSuccessMessage, displayStyle } from '../../utils';
 
 interface Props {
   link: string,
+  date: string,
+  time: string,
+  password: string,
   showFormModal: boolean,
   showDateTimePicker: boolean,
   showPassword: boolean,
   showReplyOnce: boolean,
   showReplyOncePerday: boolean,
-  onToggleFormModal: (showFormModal: boolean) => any
+  onToggleFormModal: (showFormModal: boolean) => any,
+  onToggleDateTimePicker: (showDateTimePicker: boolean) => any,
+  onTogglePassword: (showPassword: boolean) => any,
+  onToggleReplyOnce: (showReplyOnce: boolean) => any,
+  onToggleReplyOncePerday: (showReplyOncePerday: boolean) => any
 }
 
 function FormModal({
   link,
+  date,
+  time,
+  password,
   showFormModal,
   showDateTimePicker,
   showPassword,
   showReplyOnce,
   showReplyOncePerday,
-  onToggleFormModal
+  onToggleFormModal,
+  onToggleDateTimePicker,
+  onTogglePassword,
+  onToggleReplyOnce,
+  onToggleReplyOncePerday
 }: Props) {
   return (
     <div className="form-container">
@@ -34,18 +50,54 @@ function FormModal({
       </Layout.Row>
       <Dialog
         title="发布表单"
-        visible={ !showFormModal }
+        size={'tiny'}
+        visible={ showFormModal }
         closeOnClickModal={false}
         closeOnPressEscape={false}
-        onCancel={ () => onToggleFormModal(true) }
+        onCancel={ () => onToggleFormModal(false) }
       >
         <Dialog.Body>
-          <div>here is Link component</div>
+          <div>
+            <Layout.Row>
+              <Layout.Col span={24}>
+                <Input className="link-value" value={ link } append={<CopyToClipboard text={ link } onCopy={ copyPath }><Button>复制链接</Button></CopyToClipboard>} />
+              </Layout.Col>
+            </Layout.Row>
+          </div>
           <div className="p-20"><QRCode /></div>
-          <div>here is DateTimePicker component</div>
-          <div>here is Password component</div>
-          <div>here is ReplyOnce component</div>
-          <div>here is ReplyOncePerday component</div>
+          <div className="mb-20">
+            <Layout.Row>
+              <Layout.Col span={24}>
+                <Checkbox onChange={ () => onToggleDateTimePicker(!showDateTimePicker) } checked={ showDateTimePicker }/> <span className="text">限制表单提交日期</span>
+                <div style={ displayStyle(showDateTimePicker) }>
+                  sss
+                </div>
+              </Layout.Col>
+            </Layout.Row>
+          </div>
+          <div className="mb-20">
+            <Layout.Row>
+              <Layout.Col span={24}>
+                <Checkbox onChange={ () => onTogglePassword(!showPassword) } checked={ showPassword }/> <span className="text">需要密码访问</span>
+                <div style={ displayStyle(showPassword) }>sss</div>
+              </Layout.Col>
+            </Layout.Row>
+          </div>
+          <div className="mb-20">
+            <Layout.Row>
+              <Layout.Col span={24}>
+                <Checkbox onChange={ () => onToggleReplyOnce(!showReplyOnce) } checked={ showReplyOnce }/> <span className="text">仅限回复一次</span>
+                <p style={ displayStyle(showReplyOnce) } className="text reply-desc">每个IP限填一次，对公司内网或公共WIFI网络环境下的用户可能会有影响</p>
+              </Layout.Col>
+            </Layout.Row>
+          </div>
+          <div>
+            <Layout.Row>
+              <Layout.Col span={24}>
+                <Checkbox onChange={ () => onToggleReplyOncePerday(!showReplyOncePerday) } checked={ showReplyOncePerday }/> <span className="text">仅限每天回复一次</span>
+              </Layout.Col>
+            </Layout.Row>
+          </div>
         </Dialog.Body>
       </Dialog>
     </div>
@@ -54,6 +106,9 @@ function FormModal({
 
 function mapStateToProps({
   link,
+  date,
+  time,
+  password,
   showFormModal,
   showDateTimePicker,
   showPassword,
@@ -62,6 +117,9 @@ function mapStateToProps({
 }: FormModalState) {
   return {
     link,
+    date,
+    time,
+    password,
     showFormModal,
     showDateTimePicker,
     showPassword,
@@ -72,8 +130,40 @@ function mapStateToProps({
 
 function mapDispatchToProps(dispatch: Dispatch<actions.FormModalAction>) {
   return {
-    onToggleFormModal: (showFormModal: boolean) => dispatch(actions.updateShowFormModal(showFormModal))
+    onToggleFormModal: (showFormModal: boolean) => {
+      dispatch(actions.updateShowFormModal(showFormModal));
+      if (showFormModal) {
+        dispatch(actions.updateLink(generateDynamicKey()));
+      }
+    },
+    onToggleDateTimePicker: (showDateTimePicker: boolean) => {
+      dispatch(actions.updateShowDateTimePicker(showDateTimePicker));
+      if (showDateTimePicker) {
+        console.log('here update the date time');
+      }
+      showSuccessMessage('设置成功！');
+    },
+    onTogglePassword: (showPassword: boolean) => {
+      dispatch(actions.updateShowPassword(showPassword));
+      if (showPassword) {
+        console.log('here update the password');
+      }
+      showSuccessMessage('设置成功！');
+    },
+    onToggleReplyOnce: (showReplyOnce: boolean) => {
+      dispatch(actions.updateShowReplyOnce(showReplyOnce));
+      showSuccessMessage('设置成功！');
+    },
+    onToggleReplyOncePerday: (showReplyOncePerday: boolean) => {
+      dispatch(actions.updateShowReplyOncePerday(showReplyOncePerday));
+      showSuccessMessage('设置成功！');
+    },
+
   }
+}
+
+function copyPath(): void {
+  showSuccessMessage('复制成功！');
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormModal)

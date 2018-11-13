@@ -1,8 +1,11 @@
-import { UPDATE_LINK, TOGGLE_FORM_MODAL, TOGGLE_DATE_TIME_PICKER, TOGGLE_PASSWORD, TOGGLE_REPLY_ONCE, TOGGLE_REPLY_ONCE_PERDAY } from './actionTypes'
-import { FormModalAction } from './actions'
+import { UPDATE_LINK, UPDATE_DATE, UPDATE_TIME, UPDATE_PASSWORD, TOGGLE_FORM_MODAL, TOGGLE_DATE_TIME_PICKER, TOGGLE_PASSWORD, TOGGLE_REPLY_ONCE, TOGGLE_REPLY_ONCE_PERDAY } from './actionTypes';
+import { FormModalAction } from './actions';
 
 export interface FormModalState {
   link?: string
+  date?: string
+  time?: string
+  password?: string
   showFormModal?: boolean
   showDateTimePicker?: boolean
   showPassword?: boolean
@@ -12,15 +15,28 @@ export interface FormModalState {
 
 export default (state: FormModalState = {
   link: '',
+  date: '',
+  time: '',
+  password: '',
   showFormModal: false,
   showDateTimePicker: false,
   showPassword: false,
   showReplyOnce: false,
   showReplyOncePerday: false
 }, action: FormModalAction) => {
+  console.log(state, action);
   switch(action.type) {
     case UPDATE_LINK: {
       return { ...state, link: action.link }
+    }
+    case UPDATE_DATE: {
+      return { ...state, link: action.date }
+    }
+    case UPDATE_TIME: {
+      return { ...state, link: action.time }
+    }
+    case UPDATE_PASSWORD: {
+      return { ...state, link: action.password }
     }
     case TOGGLE_FORM_MODAL: {
       return { ...state, showFormModal: action.showFormModal }

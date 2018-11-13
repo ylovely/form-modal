@@ -1,6 +1,6 @@
-import * as React from 'react'
-import { Layout } from 'element-react'
-import qrcode from '../assets/qrcode.png'
+import * as React from 'react';
+import { Layout } from 'element-react';
+import qrcode from '../assets/qrcode.png';
 
 export default () => {
   return (
