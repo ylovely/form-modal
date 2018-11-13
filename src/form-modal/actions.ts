@@ -7,12 +7,12 @@ export interface UpdateLink {
 
 export interface UpdateDate {
   type: typeof UPDATE_DATE
-  date: string
+  date: Date
 }
 
 export interface UpdateTime {
   type: typeof UPDATE_TIME
-  time: string
+  time: Date
 }
 
 export interface UpdatePassword {
@@ -54,14 +54,14 @@ export const updateLink = (link: string): UpdateLink => {
   }
 };
 
-export const updateDate = (date: string): UpdateDate => {
+export const updateDate = (date: Date): UpdateDate => {
   return {
     type: UPDATE_DATE,
     date
   }
 };
 
-export const updateTime = (time: string): UpdateTime => {
+export const updateTime = (time: Date): UpdateTime => {
   return {
     type: UPDATE_TIME,
     time

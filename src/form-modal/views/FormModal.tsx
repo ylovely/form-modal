@@ -4,20 +4,23 @@ import { Dispatch } from 'redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { FormModalState } from '../reducer';
 import * as actions from '../actions';
-import { Layout, Button, Dialog, Input, Checkbox } from 'element-react';
+import { Layout, Button, Dialog, Input, Checkbox, DatePicker, TimeSelect } from 'element-react';
 import QRCode from '../../qrcode/QRCode';
-import { generateDynamicKey, showSuccessMessage, displayStyle } from '../../utils';
+import { generateDynamicKey, generateDynamicPassword, showSuccessMessage, displayStyle } from '../../utils';
 
 interface Props {
   link: string,
-  date: string,
-  time: string,
+  date: Date,
+  time: Date,
   password: string,
   showFormModal: boolean,
   showDateTimePicker: boolean,
   showPassword: boolean,
   showReplyOnce: boolean,
   showReplyOncePerday: boolean,
+  onChangeDate: (date: Date) => any,
+  onChangeTime: (time: Date) => any,
+  onRefreshPassword: () => any,
   onToggleFormModal: (showFormModal: boolean) => any,
   onToggleDateTimePicker: (showDateTimePicker: boolean) => any,
   onTogglePassword: (showPassword: boolean) => any,
@@ -35,6 +38,9 @@ function FormModal({
   showPassword,
   showReplyOnce,
   showReplyOncePerday,
+  onChangeDate,
+  onChangeTime,
+  onRefreshPassword,
   onToggleFormModal,
   onToggleDateTimePicker,
   onTogglePassword,
@@ -70,16 +76,25 @@ function FormModal({
               <Layout.Col span={24}>
                 <Checkbox onChange={ () => onToggleDateTimePicker(!showDateTimePicker) } checked={ showDateTimePicker }/> <span className="text">限制表单提交日期</span>
                 <div style={ displayStyle(showDateTimePicker) }>
-                  sss
+                  <div className="date-time-picker">
+                    <DatePicker value={ date } placeholder="选择日期" onChange={ d => onChangeDate(d) }/>
+                    <TimeSelect value={ time } placeholder="选择时间" onChange={ t => onChangeTime(t) } start="00:00" step="01:00" end="23:00"/>
+                  </div>
                 </div>
               </Layout.Col>
             </Layout.Row>
           </div>
           <div className="mb-20">
             <Layout.Row>
-              <Layout.Col span={24}>
-                <Checkbox onChange={ () => onTogglePassword(!showPassword) } checked={ showPassword }/> <span className="text">需要密码访问</span>
-                <div style={ displayStyle(showPassword) }>sss</div>
+              <Layout.Col span={24} className="need-pwd-box">
+                <div className="need-pwd-check">
+                  <Checkbox onChange={ () => onTogglePassword(!showPassword) } checked={ showPassword }/>
+                  <span className="text">需要密码访问</span>
+                </div>
+                <div style={ displayStyle(showPassword) }>
+                  <Input className="pwd-input" value={ password } readOnly={ true }/>
+                  <Button type="text" onClick={ () => onRefreshPassword() }>更换密码</Button>
+                </div>
               </Layout.Col>
             </Layout.Row>
           </div>
@@ -130,6 +145,21 @@ function mapStateToProps({
 
 function mapDispatchToProps(dispatch: Dispatch<actions.FormModalAction>) {
   return {
+    onChangeDate: (date: Date) => {
+      console.log(date);
+      dispatch(actions.updateDate(date));
+      showSuccessMessage('设置成功！');
+    },
+    onChangeTime: (time: Date) => {
+      console.log(time);
+      dispatch(actions.updateTime(time));
+      showSuccessMessage('设置成功！');
+    },
+    onRefreshPassword: () => {
+      const password = generateDynamicPassword();
+      dispatch(actions.updatePassword(password));
+      showSuccessMessage('设置成功！');
+    },
     onToggleFormModal: (showFormModal: boolean) => {
       dispatch(actions.updateShowFormModal(showFormModal));
       if (showFormModal) {
@@ -138,15 +168,13 @@ function mapDispatchToProps(dispatch: Dispatch<actions.FormModalAction>) {
     },
     onToggleDateTimePicker: (showDateTimePicker: boolean) => {
       dispatch(actions.updateShowDateTimePicker(showDateTimePicker));
-      if (showDateTimePicker) {
-        console.log('here update the date time');
-      }
       showSuccessMessage('设置成功！');
     },
     onTogglePassword: (showPassword: boolean) => {
       dispatch(actions.updateShowPassword(showPassword));
       if (showPassword) {
-        console.log('here update the password');
+        const password = generateDynamicPassword();
+        dispatch(actions.updatePassword(password));
       }
       showSuccessMessage('设置成功！');
     },
@@ -157,8 +185,7 @@ function mapDispatchToProps(dispatch: Dispatch<actions.FormModalAction>) {
     onToggleReplyOncePerday: (showReplyOncePerday: boolean) => {
       dispatch(actions.updateShowReplyOncePerday(showReplyOncePerday));
       showSuccessMessage('设置成功！');
-    },
-
+    }
   }
 }
 

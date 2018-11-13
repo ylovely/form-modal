@@ -1,10 +1,11 @@
 import { UPDATE_LINK, UPDATE_DATE, UPDATE_TIME, UPDATE_PASSWORD, TOGGLE_FORM_MODAL, TOGGLE_DATE_TIME_PICKER, TOGGLE_PASSWORD, TOGGLE_REPLY_ONCE, TOGGLE_REPLY_ONCE_PERDAY } from './actionTypes';
 import { FormModalAction } from './actions';
+import { getNowDate, getNowTime } from '../utils'
 
 export interface FormModalState {
   link?: string
-  date?: string
-  time?: string
+  date?: Date
+  time?: Date
   password?: string
   showFormModal?: boolean
   showDateTimePicker?: boolean
@@ -15,8 +16,8 @@ export interface FormModalState {
 
 export default (state: FormModalState = {
   link: '',
-  date: '',
-  time: '',
+  date: getNowDate(),
+  time: getNowTime(),
   password: '',
   showFormModal: false,
   showDateTimePicker: false,
@@ -30,13 +31,13 @@ export default (state: FormModalState = {
       return { ...state, link: action.link }
     }
     case UPDATE_DATE: {
-      return { ...state, link: action.date }
+      return { ...state, date: action.date }
     }
     case UPDATE_TIME: {
-      return { ...state, link: action.time }
+      return { ...state, time: action.time }
     }
     case UPDATE_PASSWORD: {
-      return { ...state, link: action.password }
+      return { ...state, password: action.password }
     }
     case TOGGLE_FORM_MODAL: {
       return { ...state, showFormModal: action.showFormModal }
