@@ -6,7 +6,7 @@ import { FormModalState } from './reducer';
 import * as actions from './actions';
 import { Layout, Button, Dialog, Input, Checkbox, DatePicker, TimeSelect } from 'element-react';
 import QRCode from './QRCode';
-import './form.css';
+import './form.scss';
 import { generateDynamicKey, generateDynamicPassword, showSuccessMessage, displayStyle } from '../utils/index';
 
 interface Props {

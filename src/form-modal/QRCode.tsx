@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Layout } from 'element-react';
-import './form.css';
+import './form.scss';
 import qrcode from '../assets/qrcode.png';
 
 export default () => {
