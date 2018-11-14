@@ -5,6 +5,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import { FormModalState } from './reducer';
 import * as actions from './actions';
 import { Layout, Button, Dialog, Input, Checkbox, DatePicker, TimeSelect } from 'element-react';
+import _ from 'lodash'
 import QRCode from './QRCode';
 import './form.scss';
 import { generateDynamicKey, generateDynamicPassword, showSuccessMessage, displayStyle } from '../utils/index';
@@ -75,7 +76,7 @@ function FormModalContainer({
           <div className="mb-20">
             <Layout.Row>
               <Layout.Col span={24}>
-                <Checkbox onChange={ () => onToggleDateTimePicker(!showDateTimePicker) } checked={ showDateTimePicker }/> <span className="text">限制表单提交日期</span>
+                <Checkbox onChange={  _.debounce(() => onToggleDateTimePicker(!showDateTimePicker), 500) } checked={ showDateTimePicker }/> <span className="text">限制表单提交日期</span>
                 <div style={ displayStyle(showDateTimePicker) }>
                   <div className="date-time-picker">
                     <DatePicker value={ date } placeholder="选择日期" onChange={ d => onChangeDate(d) }/>
@@ -89,12 +90,12 @@ function FormModalContainer({
             <Layout.Row>
               <Layout.Col span={24} className="need-pwd-box">
                 <div className="need-pwd-check">
-                  <Checkbox onChange={ () => onTogglePassword(!showPassword) } checked={ showPassword }/>
+                  <Checkbox onChange={  _.debounce(() => onTogglePassword(!showPassword), 500) } checked={ showPassword }/>
                   <span className="text">需要密码访问</span>
                 </div>
                 <div style={ displayStyle(showPassword) }>
                   <Input className="pwd-input" value={ password } readOnly={ true }/>
-                  <Button type="text" onClick={ () => onRefreshPassword() }>更换密码</Button>
+                  <Button type="text" onClick={  _.debounce(() => onRefreshPassword(), 500) }>更换密码</Button>
                 </div>
               </Layout.Col>
             </Layout.Row>
@@ -102,7 +103,7 @@ function FormModalContainer({
           <div className="mb-20">
             <Layout.Row>
               <Layout.Col span={24}>
-                <Checkbox onChange={ () => onToggleReplyOnce(!showReplyOnce) } checked={ showReplyOnce }/> <span className="text">仅限回复一次</span>
+                <Checkbox onChange={  _.debounce(() => onToggleReplyOnce(!showReplyOnce), 500) } checked={ showReplyOnce }/> <span className="text">仅限回复一次</span>
                 <p style={ displayStyle(showReplyOnce) } className="text reply-desc">每个IP限填一次，对公司内网或公共WIFI网络环境下的用户可能会有影响</p>
               </Layout.Col>
             </Layout.Row>
@@ -110,7 +111,7 @@ function FormModalContainer({
           <div>
             <Layout.Row>
               <Layout.Col span={24}>
-                <Checkbox onChange={ () => onToggleReplyOncePerday(!showReplyOncePerday) } checked={ showReplyOncePerday }/> <span className="text">仅限每天回复一次</span>
+                <Checkbox onChange={ _.debounce(() => onToggleReplyOncePerday(!showReplyOncePerday), 500) } checked={ showReplyOncePerday }/> <span className="text">仅限每天回复一次</span>
               </Layout.Col>
             </Layout.Row>
           </div>
