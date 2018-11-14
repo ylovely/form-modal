@@ -3,6 +3,10 @@ export function map(array: T[], iteratee: any): T[] {
   return arrayMap(array, baseIteratee(iteratee));
 }
 
+export function reduce(array: T[], iteratee: any, accumulator: any): any {
+  return arrayReduce(array, baseIteratee(iteratee), accumulator);
+}
+
 export function arrayMap(array: T[], iteratee: any): T[] {
   let index = -1;
   const length = array.length;
@@ -12,6 +16,19 @@ export function arrayMap(array: T[], iteratee: any): T[] {
     result[index] = iteratee(array[index], index, array);
   }
   return result;
+}
+
+export function arrayReduce(array, iteratee, accumulator) {
+  let index = -1;
+  const length = array.length;
+
+  if (length) {
+    accumulator = array[++index];
+  }
+  while (++index < length) {
+    accumulator = iteratee(accumulator, array[index], index, array);
+  }
+  return accumulator;
 }
 
 export function baseIteratee(value: any) {
