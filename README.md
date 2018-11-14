@@ -18,6 +18,8 @@ npm install
 npm start
 ```
 
+#### 题目一在 ./exercise-map-reduce.ts 文件中
+
 #### References:
 Book: Pro TypeScript Application-Scale JavaScript Development(2nd)
 
