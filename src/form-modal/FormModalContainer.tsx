@@ -8,7 +8,7 @@ import { Layout, Button, Dialog, Input, Checkbox, DatePicker, TimeSelect } from 
 import _ from 'lodash'
 import QRCode from './QRCode';
 import './form.scss';
-import { generateDynamicKey, generateDynamicPassword, showSuccessMessage, displayStyle } from '../utils/index';
+import { generateDynamicKey, generateDynamicPassword, showSuccessMessage, displayStyle } from '../utils';
 
 interface Props {
   link: string,

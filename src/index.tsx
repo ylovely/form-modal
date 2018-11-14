@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { views as FormModal } from './form-modal';
-import './index.css';
+import './index.scss';
 import { Provider } from 'react-redux'
 import store from './Store'
 import registerServiceWorker from './registerServiceWorker';
