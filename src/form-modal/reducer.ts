@@ -1,6 +1,6 @@
 import { UPDATE_LINK, UPDATE_DATE, UPDATE_TIME, UPDATE_PASSWORD, TOGGLE_FORM_MODAL, TOGGLE_DATE_TIME_PICKER, TOGGLE_PASSWORD, TOGGLE_REPLY_ONCE, TOGGLE_REPLY_ONCE_PERDAY } from './actionTypes';
 import { FormModalAction } from './actions';
-import { getNowDate, getNowTime } from '../utils'
+import { getNowDate, getNowTime } from '../utils/index'
 
 export interface FormModalState {
   link?: string

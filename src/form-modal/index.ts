@@ -1,5 +1,5 @@
 import * as actions from './actions'
 import reducer from './reducer'
-import views from './views/FormModal'
+import views from './FormModalContainer'
 
 export { actions, reducer, views }

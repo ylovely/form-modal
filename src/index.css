@@ -2,11 +2,6 @@
   margin: 0;
   padding: 0;
 }
-.submit-btn-col {
-  display: flex;
-  justify-content: center;
-  padding-top: 20px;
-}
 .p-20 {
   padding: 20px;
 }
@@ -18,41 +13,4 @@
 }
 .message-tip {
   z-index: 2000;
-}
-.qrcode {
-  display: flex;
-  justify-content: left;
-}
-.qrcode-img {
-  margin-right: 30px;
-}
-.qrcode-desc, .text {
-  font-size: 15px;
-}
-.qrcode-desc p {
-  margin-bottom: 10px;
-}
-.reply-desc {
-  color: #aaa;
-  margin-top: 10px;
-  padding-left: 30px;
-}
-.date-time-picker {
-  margin-top: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-around;
-}
-.need-pwd-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.need-pwd-check {
-  line-height: 36px;
-}
-.el-input.pwd-input {
-  width: 80px;
-  margin-right: 20px;
 }

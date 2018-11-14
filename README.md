@@ -39,4 +39,4 @@ https://redux.js.org/introduction
 
 4. 样式方面，未保持与设计图完全一致。
 
-5. checkbox点击的性能优化。
+5. 未编写单元测试。

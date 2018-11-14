@@ -2,11 +2,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import { FormModalState } from '../reducer';
-import * as actions from '../actions';
+import { FormModalState } from './reducer';
+import * as actions from './actions';
 import { Layout, Button, Dialog, Input, Checkbox, DatePicker, TimeSelect } from 'element-react';
-import QRCode from '../../qrcode/QRCode';
-import { generateDynamicKey, generateDynamicPassword, showSuccessMessage, displayStyle } from '../../utils';
+import QRCode from './QRCode';
+import './form.css';
+import { generateDynamicKey, generateDynamicPassword, showSuccessMessage, displayStyle } from '../utils/index';
 
 interface Props {
   link: string,
@@ -28,7 +29,7 @@ interface Props {
   onToggleReplyOncePerday: (showReplyOncePerday: boolean) => any
 }
 
-function FormModal({
+function FormModalContainer({
   link,
   date,
   time,
@@ -191,4 +192,4 @@ function copyPath(): void {
   showSuccessMessage('复制成功！');
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormModal)
+export default connect(mapStateToProps, mapDispatchToProps)(FormModalContainer)
